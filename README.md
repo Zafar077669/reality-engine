@@ -5,7 +5,7 @@ Reality Engine — bu production-ready, enterprise-grade backend platform bo‘l
 xavfsizlik, izolyatsiya va masshtablanuvchanlik asosiy talab bo‘lgan SaaS tizimlar uchun mo‘ljallangan.
 
 Bu loyiha oddiy CRUD backend emas.
-U Senior Backend Engineer darajasidagi arxitektura, xavfsizlik va operatsion tayyorgarlikni namoyish etadi.
+U production-grade arxitektura, kuchli xavfsizlik va operatsion tayyorgarlikka asoslangan enterprise backend platformani namoyish etadi.
 
 🌐 Live Demo (Production)
 
