@@ -1,85 +1,145 @@
-# 🚀 Reality Engine
-### Enterprise-Grade Multi-Tenant Backend Platform
+🚀 Reality Engine
+Enterprise-Grade Multi-Tenant Backend Platform
 
-Reality Engine is a **production-ready, enterprise-grade backend platform** built with **Django** and **Django REST Framework**.
+Reality Engine — bu production-ready, enterprise-grade backend platform bo‘lib,
+xavfsizlik, izolyatsiya va masshtablanuvchanlik asosiy talab bo‘lgan SaaS tizimlar uchun mo‘ljallangan.
 
-It is designed to power **secure, scalable SaaS products** where **strict tenant isolation**, **auditability**, and **reliability** are non-negotiable.
+Bu loyiha oddiy CRUD backend emas.
+U Senior Backend Engineer darajasidagi arxitektura, xavfsizlik va operatsion tayyorgarlikni namoyish etadi.
 
-This project demonstrates **Senior-level backend engineering practices**, focusing not only on code, but also on **architecture, security, and operational readiness**.
+🌐 Live Demo (Production)
 
----
+🔗 Swagger / API Docs
+👉 https://reality-engine.duckdns.org/api/docs/
 
-## 🧠 Architecture Overview
+🔐 HTTPS (Let’s Encrypt)
+🚀 Nginx + Gunicorn + systemd
+🧠 Real production server
 
-### Multi-Tenant Isolation (Logic-Level)
+🧠 Architecture Overview
+Multi-Tenant Isolation (Logic-Level)
 
-Reality Engine implements **strict multi-tenant isolation at the logic layer**, not just database filtering.
+Reality Engine qat’iy multi-tenant izolyatsiyani logic layer darajasida amalga oshiradi.
 
-- Each request is scoped to a **single tenant (company)**
-- Cross-tenant data access is **technically impossible**
-- Isolation is enforced via **mixins and query constraints**
-- Suitable for **enterprise SaaS, fintech, and security-critical systems**
+✔ Har bir request bitta kompaniya (tenant) bilan bog‘langan
+✔ Tenantlar orasida cross-access texnik jihatdan imkonsiz
+✔ Izolyatsiya:
 
-> This approach mirrors architectures used in **banking systems and large-scale SaaS platforms**.
+QuerySet constraints
 
----
+Custom Mixins
 
-## 🔐 Security & Access Control
+Permission enforcement
 
-- **JWT authentication** (DRF SimpleJWT)
-- **Role-Based Access Control (RBAC)**:
-  - Admin
-  - Manager
-  - User
-- Fine-grained permission checks per resource
-- Protected endpoints with strict authorization rules
+📌 Bu yondashuv bank tizimlari, fintech va enterprise SaaS arxitekturalarida qo‘llaniladi.
 
-### Audit Logging
+🔐 Security & Access Control
+Authentication
 
-All critical actions are recorded:
-- User login & registration
-- Sensitive data operations
-- Signal and event creation
+JWT (DRF SimpleJWT)
 
-This enables:
-- Security forensics
-- Compliance auditing
-- Full system observability
+Stateless & scalable
 
----
+Role-Based Access Control (RBAC)
 
-## 🧪 Quality Assurance (TDD)
+Admin
 
-Reality Engine follows **Test-Driven Development (TDD)** principles.
+Manager
 
-- **Pytest + pytest-django**
-- Tests cover:
-  - Tenant isolation
-  - Permission enforcement
-  - Security edge cases
-- Prevents regressions and data integrity issues
+User
 
-> Many projects skip testing. This one treats testing as a **first-class requirement**.
+✔ Fine-grained permissions
+✔ Protected endpoints
+✔ Unauthorized access avtomatik bloklanadi
 
----
+🧾 Audit & Observability
 
-## 📦 Tech Stack
+Tizimdagi har bir muhim harakat audit qilinadi:
 
-- **Language:** Python 3.12
-- **Framework:** Django 5, Django REST Framework
-- **Auth:** SimpleJWT
-- **Async Tasks:** Celery + Celery Beat
-- **API Docs:** DRF Spectacular (OpenAPI 3.0 / Swagger)
-- **Testing:** Pytest
-- **Database:** PostgreSQL (SQLite for local development)
-- **Deployment:** Gunicorn, Nginx, Systemd
-- **OS:** Linux (Ubuntu)
+Login / Logout
 
----
+Registration
 
-## 📁 Project Structure
+Signal & Event creation
 
-```text
+Sensitive operations
+
+Bu quyidagilarni ta’minlaydi:
+
+🔍 Security forensics
+
+📜 Compliance (audit trail)
+
+👁 System observability
+
+🧪 Quality Assurance (TDD)
+
+Reality Engine Test-Driven Development prinsiplariga asoslangan.
+
+Pytest + pytest-django
+
+Testlar quyidagilarni qamrab oladi:
+
+Tenant isolation
+
+Permission enforcement
+
+Security edge-cases
+
+🛑 Ko‘plab loyihalarda test yo‘q
+✅ Bu loyihada testlar — core requirement
+
+📦 Tech Stack
+
+Backend
+
+Python 3.12
+
+Django 5
+
+Django REST Framework
+
+Security
+
+SimpleJWT
+
+RBAC
+
+HTTPS (Let’s Encrypt)
+
+Async
+
+Celery
+
+Celery Beat
+
+Redis
+
+API Docs
+
+DRF Spectacular
+
+OpenAPI 3.0
+
+Swagger UI
+
+Database
+
+PostgreSQL (production)
+
+SQLite (local dev)
+
+Deployment
+
+Gunicorn
+
+Nginx
+
+systemd
+
+Linux (Ubuntu)
+
+📁 Project Structure
 reality_engine/
 ├── actors/        # Core domain actors
 ├── api/           # API routing, serializers, mixins
@@ -91,74 +151,81 @@ reality_engine/
 ├── config/        # Django & Celery configuration
 ├── manage.py
 └── pytest.ini
-📚 API Documentation
-Interactive Swagger UI (auto-generated):
 
-/api/schema/swagger-ui/
-OpenAPI 3.0 compliant
-
-Frontend-ready
-
-No manual API documentation required
-
-⚙️ Quick Start (Local Development)
+⚙️ Local Development
 git clone https://github.com/Zafar077669/reality-engine.git
 cd reality-engine
+
 python -m venv venv
-venv\Scripts\activate  # Windows
+source venv/bin/activate   # Linux / macOS
+venv\Scripts\activate      # Windows
+
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
 🧪 Run Tests
 pytest
+
+
 ✔ Tenant isolation validated
 ✔ Security rules enforced
-✔ Critical paths covered
+✔ Critical paths protected
 
 🚀 Production Readiness
-Reality Engine is designed with real production environments in mind:
 
-Stateless JWT authentication
+Reality Engine production muhit uchun tayyor:
 
-Environment-based configuration
+Stateless JWT auth
 
-Audit logs for compliance
+Environment-based config
 
-Clean separation of concerns
+Audit logging
 
-Ready for horizontal scaling
+Clean architecture
 
-Safe to deploy behind Nginx + Gunicorn
+Horizontal scaling ready
+
+HTTPS enabled
+
+systemd managed services
 
 💎 Value Proposition
-Scalability: Works for 10 or 10,000 tenants
 
-Security: Designed with enterprise security principles
+Scalability — 10 yoki 10,000 tenant
 
-Reliability: Automated tests protect core logic
+Security — enterprise-grade isolation
 
-Transparency: Full audit trail
+Reliability — test-covered core logic
 
-Developer Experience: Clean APIs & documentation
+Transparency — full audit trail
 
-🛣️ Roadmap (Planned Improvements)
+Developer Experience — clean API & docs
+
+🛣️ Roadmap
+
 API versioning (/api/v1/)
 
 GitHub Actions (CI/CD)
 
 Coverage reporting
 
-Rate limiting for sensitive endpoints
+Rate limiting
 
-Production logging & monitoring
+Advanced monitoring (Prometheus / Sentry)
 
 👨‍💻 Author
+
 Zafar Sharipov
 Backend Engineer — Django | SaaS | Enterprise Systems
 
+GitHub: https://github.com/Zafar077669
+
 📄 License
+
 MIT License
 
-Note
+🔥 Final Note
+
 This is not a demo project.
-Reality Engine reflects real-world backend systems built by senior engineers for production SaaS platforms.
+Reality Engine reflects real-world backend systems built for production SaaS platforms using senior-level engineering practices.
