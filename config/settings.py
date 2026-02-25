@@ -200,3 +200,5 @@ SPECTACULAR_SETTINGS = {
         }
     },
 }
+
+REDIS_URL = "redis://localhost:6379/0"
