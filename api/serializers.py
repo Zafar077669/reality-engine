@@ -22,10 +22,11 @@ class SignalSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "company",
-            "signal_type",
+            "response_time_ms",
+            "error_rate_percent",
+            "downtime_minutes",
             "severity",
-            "explanation",
-            "predicted_impact",
-            "detected_at",
+            "risk_score",
+            "created_at",
         ]
-        read_only_fields = ["id", "detected_at"]
+        read_only_fields = ["id", "created_at"]

@@ -157,3 +157,10 @@ class AdminManagerView(APIView):
             {"message": "Admin or Manager access granted"},
             status=status.HTTP_200_OK,
         )
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+from api.throttling import AuthRateThrottle
+
+
+class ThrottledTokenObtainPairView(TokenObtainPairView):
+    throttle_classes = [AuthRateThrottle]

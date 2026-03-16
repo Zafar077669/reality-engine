@@ -1,10 +1,13 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
-from companies.models import Company
+
 
 class User(AbstractUser):
+    """
+    NOTE:
+    role and company fields are legacy.
+    New RBAC system uses CompanyMembership.
+    """
 
     ROLE_CHOICES = (
         ("admin", "Admin"),
@@ -12,9 +15,10 @@ class User(AbstractUser):
         ("company_user", "Company User"),
     )
 
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    # 🔥 LEGACY (temporary, do not use in new logic)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, null=True, blank=True)
     company = models.ForeignKey(
-        Company,
+        "companies.Company",
         on_delete=models.CASCADE,
         null=True,
         blank=True

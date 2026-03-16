@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import RegisterView, MeView, LogoutView, AdminOnlyView, AdminManagerView
+from .views import ThrottledTokenObtainPairView
 
 urlpatterns = [
     path("register/", RegisterView.as_view()),
@@ -13,6 +14,7 @@ urlpatterns = [
     path("me/", MeView.as_view()),
     path("admin-only/", AdminOnlyView.as_view(), name="admin-only"),
     path("admin-manager/", AdminManagerView.as_view(), name="admin-manager"),
+    path("token/", ThrottledTokenObtainPairView.as_view(), name="token_obtain_pair"),
 ]
 
 
