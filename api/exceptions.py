@@ -11,10 +11,10 @@ def custom_exception_handler(exc, context):
     request = context.get("request")
     request_id = getattr(request, "request_id", None)
 
-    # 1️⃣ DRF default handler
+    #  DRF default handler
     response = drf_exception_handler(exc, context)
 
-    # 2️⃣ AGAR DRF response BOR bo‘lsa
+    #  AGAR DRF response BOR bo‘lsa
     if response is not None:
 
         # 🔥 429 — RATE LIMIT CASE
@@ -55,7 +55,7 @@ def custom_exception_handler(exc, context):
             status=response.status_code,
         )
 
-    # 3️⃣ 500 — UNHANDLED ERROR
+    #  500 — UNHANDLED ERROR
     logger.exception(
         "Unhandled exception",
         extra={

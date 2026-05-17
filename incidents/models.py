@@ -47,7 +47,7 @@ class Incident(models.Model):
         related_name="incidents",
     )
 
-    # 🔥 Incident metadata
+
     title = models.CharField(max_length=255, default="Infrastructure Incident")
     summary = models.TextField(null=True, blank=True)
 
@@ -84,10 +84,10 @@ class Incident(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # 🔒 TELEGRAM DEDUP FLAG
+
     telegram_notified = models.BooleanField(default=False)
 
-    # 🔥 ACK SYSTEM
+
     acknowledged_at = models.DateTimeField(null=True, blank=True)
     acknowledged_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -97,7 +97,7 @@ class Incident(models.Model):
         related_name="acknowledged_incidents",
     )
 
-    # 🔥 ESCALATION SYSTEM
+
     escalation_level = models.PositiveIntegerField(default=0)
     last_escalated_at = models.DateTimeField(null=True, blank=True)
 
@@ -110,10 +110,6 @@ class Incident(models.Model):
             models.Index(fields=["company", "escalation_level"]),
             models.Index(fields=["company", "severity"]),
         ]
-
-    # ============================
-    # Status Transitions
-    # ============================
 
     def mark_investigating(self):
         if self.status == self.STATUS_OPEN:
@@ -152,9 +148,6 @@ class Incident(models.Model):
                 "Incident reopened"
             )
 
-    # ============================
-    # ACK Helper
-    # ============================
 
     def acknowledge(self, user):
         if not self.acknowledged_at:
@@ -192,9 +185,7 @@ class Incident(models.Model):
                 f"Escalated to level {self.escalation_level}"
             )
 
-    # ============================
-    # SRE Metrics
-    # ============================
+
 
     @property
     def mttr_minutes(self):
@@ -210,9 +201,7 @@ class Incident(models.Model):
         delta = end_time - self.opened_at
         return int(delta.total_seconds() / 60)
 
-    # ============================
-    # Timeline Logging
-    # ============================
+ 
 
     def _log_event(self, event_type, message):
         IncidentTimeline.objects.create(
@@ -221,9 +210,7 @@ class Incident(models.Model):
             message=message,
         )
 
-    # ============================
-    # Assignment Change Logging
-    # ============================
+
 
     def save(self, *args, **kwargs):
 

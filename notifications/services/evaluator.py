@@ -8,13 +8,13 @@ class SignalEvaluator:
         Severity hisoblaydi va notify qiladi
         """
 
-        # 🔥 1. Severity hisoblash
+        
         calculated_severity = self._calculate_severity(signal)
 
         signal.severity = calculated_severity
         signal.save()
 
-        # 🔥 2. Notify (faqat high/critical ichida)
+        
         NotificationService().notify(signal)
 
         return signal

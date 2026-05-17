@@ -7,9 +7,7 @@ from .models import Incident, IncidentTimeline
 from signals.models import Signal
 
 
-# =========================
-# Inlines
-# =========================
+
 
 class SignalInline(admin.TabularInline):
     model = Signal
@@ -35,9 +33,6 @@ class IncidentTimelineInline(admin.TabularInline):
     )
 
 
-# =========================
-# Incident Admin
-# =========================
 
 @admin.register(Incident)
 class IncidentAdmin(admin.ModelAdmin):
@@ -70,9 +65,7 @@ class IncidentAdmin(admin.ModelAdmin):
         "action_mark_resolved",
     ]
 
-    # =========================
-    # UI Helpers
-    # =========================
+
 
     def status_badge(self, obj):
         colors = {
@@ -94,9 +87,7 @@ class IncidentAdmin(admin.ModelAdmin):
 
     mttr_display.short_description = "MTTR"
 
-    # =========================
-    # Actions (SAFE)
-    # =========================
+
 
     def action_mark_investigating(self, request, queryset):
         for incident in queryset:

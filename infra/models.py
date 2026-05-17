@@ -50,7 +50,6 @@ class InfraAgent(models.Model):
         ]
 
     def save(self, *args, **kwargs):
-        # 🔐 Generate API key only once
         if not self.api_key:
             self.api_key = secrets.token_hex(32)
         super().save(*args, **kwargs)
@@ -60,9 +59,7 @@ class InfraAgent(models.Model):
         self.last_seen_at = timezone.now()
         self.save(update_fields=["last_seen_at"])
 
-    # ==========================================================
-    # 🔥 Infrastructure Health Score (NEW – SAFE, NO MIGRATION)
-    # ==========================================================
+
 
     @property
     def health_score(self):
@@ -77,9 +74,7 @@ class InfraAgent(models.Model):
         return f"{self.company.name} | {self.name}"
 
 
-# ==========================================================
-# 🔥 InfraMetricHistory (Observability Layer)
-# ==========================================================
+
 
 class InfraMetricHistory(models.Model):
     """

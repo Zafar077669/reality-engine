@@ -5,9 +5,7 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 
-# ============================================================
-# REALTIME BROADCAST
-# ============================================================
+
 
 def broadcast_signal(signal):
     """
@@ -33,9 +31,7 @@ def broadcast_signal(signal):
     )
 
 
-# ============================================================
-# CREATE SIGNAL + AUDIT + REALTIME STREAM
-# ============================================================
+
 
 def create_signal_with_audit(
     *,

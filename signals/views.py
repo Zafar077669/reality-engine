@@ -4,6 +4,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from users.mixins import CompanyQuerysetMixin
 from alerts.services.alert_dispatcher import dispatch_alert
 
@@ -11,9 +14,7 @@ from .models import Signal
 from .serializers import SignalSerializer
 
 
-# =====================================
-# 📄 SIGNAL LIST (GET)
-# =====================================
+
 class SignalListAPIView(CompanyQuerysetMixin, ListAPIView):
     queryset = Signal.objects.all()
     serializer_class = SignalSerializer
@@ -27,9 +28,7 @@ class SignalListAPIView(CompanyQuerysetMixin, ListAPIView):
     ordering = ["-created_at"]
 
 
-# =====================================
-# ➕ SIGNAL CREATE (POST)
-# =====================================
+
 class SignalCreateAPIView(CompanyQuerysetMixin, CreateAPIView):
     queryset = Signal.objects.all()
     serializer_class = SignalSerializer
@@ -45,19 +44,39 @@ class SignalCreateAPIView(CompanyQuerysetMixin, CreateAPIView):
         - alert faqat critical signal uchun
         """
 
-        # 1️⃣ Signalni saqlaymiz (company = token orqali)
         signal = serializer.save(
             company=self.request.user.company
         )
 
-        # 2️⃣ FAQAT CRITICAL bo‘lsa alert yuboramiz
         if signal.severity == "critical":
             try:
                 dispatch_alert(signal)
             except Exception as exc:
-                # ❗ Alert xatosi API ni yiqitmasligi kerak
                 import logging
                 logger = logging.getLogger(__name__)
                 logger.error(
                     f"Alert dispatch failed for signal_id={signal.id}: {exc}"
                 )
+
+
+
+class MetricsView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        qs = Signal.objects.filter(
+            company=request.user.company,
+            metric__isnull=False
+        ).order_by("created_at")[:50]
+
+        data = [
+            {
+                "metric": s.metric,
+                "metric_value": s.metric_value,
+                "created_at": s.created_at,
+            }
+            for s in qs
+        ]
+
+        return Response(data)

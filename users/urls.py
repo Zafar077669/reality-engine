@@ -8,13 +8,13 @@ from .views import ThrottledTokenObtainPairView
 
 urlpatterns = [
     path("register/", RegisterView.as_view()),
-    path("login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("login/", ThrottledTokenObtainPairView.as_view(), name="login"),
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogoutView.as_view()),
     path("me/", MeView.as_view()),
     path("admin-only/", AdminOnlyView.as_view(), name="admin-only"),
     path("admin-manager/", AdminManagerView.as_view(), name="admin-manager"),
-    path("token/", ThrottledTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    # path("token/", ThrottledTokenObtainPairView.as_view(), name="token_obtain_pair"),
 ]
 
 

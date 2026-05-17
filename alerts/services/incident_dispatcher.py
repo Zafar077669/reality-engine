@@ -33,7 +33,7 @@ def dispatch_incident_created(incident):
     client = TelegramClient()
 
     try:
-        # 1️⃣ Telegram yuborish
+        # 1️ Telegram yuborish
         client.send_message(
             chat_id=chat_id,
             text=message,
@@ -44,7 +44,7 @@ def dispatch_incident_created(incident):
         logger.error(f"Telegram send failed: {e}")
         return  # Telegram yuborilmasa DB ham yozmaymiz
 
-    # 2️⃣ DB yozish (alohida blok)
+    # 2️ DB yozish (alohida blok)
     try:
         with transaction.atomic():
 

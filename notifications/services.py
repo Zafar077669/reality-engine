@@ -7,7 +7,7 @@ def notify_incident_created(incident):
         return
 
     if incident.telegram_notified:
-        return  # 🔒 dedup
+        return  
 
     client = TelegramClient()
 

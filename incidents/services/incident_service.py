@@ -10,9 +10,7 @@ from incidents.tasks import check_incident_escalation
 
 class IncidentService:
 
-    # ============================
-    # ASSIGN INCIDENT
-    # ============================
+
 
     @staticmethod
     @transaction.atomic
@@ -21,10 +19,10 @@ class IncidentService:
         if incident.status == "resolved":
             raise PermissionDenied("Cannot assign resolved incident")
 
-        # Only Admin/Owner can assign
+
         PermissionService.require_admin_or_owner(actor, incident.company)
 
-        # Assigned user must be Engineer
+
         membership = CompanyMembership.objects.filter(
             user=engineer_user,
             company=incident.company,
@@ -34,7 +32,7 @@ class IncidentService:
         if not membership:
             raise PermissionDenied("Can assign only to Engineer")
 
-        # Assign engineer
+
         incident.assigned_to = engineer_user
         incident.escalation_level = 0
 
@@ -43,7 +41,7 @@ class IncidentService:
             "escalation_level",
         ])
 
-        # Schedule escalation check (5 min)
+
         check_incident_escalation.apply_async(
             args=[incident.id],
             countdown=300
@@ -59,9 +57,6 @@ class IncidentService:
 
         return incident
 
-    # ============================
-    # RESOLVE INCIDENT
-    # ============================
 
     @staticmethod
     @transaction.atomic
@@ -84,9 +79,7 @@ class IncidentService:
 
         return incident
 
-    # ============================
-    # ACK INCIDENT
-    # ============================
+
 
     @staticmethod
     @transaction.atomic

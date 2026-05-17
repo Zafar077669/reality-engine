@@ -2,9 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-# ==========================================================
-# 🔴 REALTIME SIGNAL STREAM
-# ==========================================================
+
 
 class SignalConsumer(AsyncWebsocketConsumer):
     """
@@ -53,9 +51,7 @@ class SignalConsumer(AsyncWebsocketConsumer):
         )
 
 
-# ==========================================================
-# 📈 REALTIME METRICS STREAM
-# ==========================================================
+
 
 class MetricsConsumer(AsyncWebsocketConsumer):
     """

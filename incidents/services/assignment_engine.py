@@ -1,5 +1,3 @@
-# incidents/services/assignment_engine.py
-
 from django.db import transaction
 from django.utils import timezone
 
@@ -26,8 +24,7 @@ def auto_assign_incident(incident: Incident):
     if not users.exists():
         return incident
 
-    # 🔁 Simple round-robin:
-    # Find last assigned incident
+
     last_incident = (
         Incident.objects
         .filter(company=incident.company, assigned_to__isnull=False)

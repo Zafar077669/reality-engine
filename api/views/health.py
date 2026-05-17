@@ -20,12 +20,12 @@ logger = logging.getLogger("reality_engine")
 class HealthCheckView(APIView):
     """
     Liveness probe (PUBLIC, INFRA)
-    ❗ Hech qachon rate-limit bo‘lmaydi
+     Hech qachon rate-limit bo‘lmaydi
     """
 
     permission_classes = [AllowAny]
     authentication_classes = []
-    throttle_classes = []  # ✅ MUHIM: butunlay o‘chiq
+    throttle_classes = []  #  MUHIM: butunlay o‘chiq
 
     def get(self, request):
         return Response(

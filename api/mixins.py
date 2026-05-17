@@ -1,4 +1,4 @@
-# api/mixins.py
+
 
 from rest_framework.permissions import BasePermission
 

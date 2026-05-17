@@ -7,9 +7,7 @@ from incidents.services.assignment_engine import auto_assign_incident
 from audit.models import AuditLog
 
 
-# ==============================
-# LEVEL 1 ESCALATION
-# ==============================
+
 
 @shared_task(bind=True, max_retries=3)
 def check_incident_escalation(self, incident_id):
@@ -51,16 +49,13 @@ def check_incident_escalation(self, incident_id):
         object_id=incident.id,
     )
 
-    # 🔥 Schedule Level 2 in 10 minutes
+
     check_incident_escalation_level_2.apply_async(
         args=[incident.id],
         countdown=10 * 60
     )
 
 
-# ==============================
-# LEVEL 2 ESCALATION
-# ==============================
 
 @shared_task(bind=True, max_retries=3)
 def check_incident_escalation_level_2(self, incident_id):
@@ -87,7 +82,7 @@ def check_incident_escalation_level_2(self, incident_id):
     incident.last_escalated_at = timezone.now()
     incident.save(update_fields=["escalation_level", "last_escalated_at"])
 
-    # 🔁 Rotate engineer
+
     auto_assign_incident(incident)
 
     IncidentTimeline.objects.create(

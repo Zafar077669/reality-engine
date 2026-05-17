@@ -13,9 +13,7 @@ from .models import Company
 from .serializers import CompanySerializer
 
 
-# =====================================================
-# COMPANY LIST & CREATE
-# =====================================================
+
 class CompanyListCreateView(
     CompanyScopedQuerysetMixin,
     ListCreateAPIView
@@ -39,9 +37,6 @@ class CompanyListCreateView(
         serializer.save()
 
 
-# =====================================================
-# COMPANY DETAIL / UPDATE / DELETE
-# =====================================================
 class CompanyDetailView(
     CompanyScopedQuerysetMixin,
     RetrieveUpdateDestroyAPIView

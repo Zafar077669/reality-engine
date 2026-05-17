@@ -1,4 +1,3 @@
-# api/throttling.py
 
 from rest_framework.throttling import (
     AnonRateThrottle,

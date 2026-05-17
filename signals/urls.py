@@ -1,8 +1,10 @@
-# signals/urls.py
 from django.urls import path
-from .views import SignalListAPIView, SignalCreateAPIView
+from .views import SignalListAPIView, SignalCreateAPIView, MetricsView
 
 urlpatterns = [
-    path("", SignalListAPIView.as_view(), name="signal-list"),          # GET
-    path("create/", SignalCreateAPIView.as_view(), name="signal-create"),  # POST
+    path("", SignalListAPIView.as_view(), name="signal-list"),          
+    path("create/", SignalCreateAPIView.as_view(), name="signal-create"),  
+
+    
+    path("metrics/", MetricsView.as_view(), name="signal-metrics"),
 ]

@@ -9,7 +9,7 @@ def update_existing_incident(*, incident, signal):
     Adds timeline event instead of opening new incident.
     """
 
-    # 🔁 STATUS GA QARAMAY UPDATE QILAMIZ
+
     metric = signal.metric
     value = signal.metric_value
     severity = signal.severity.upper()
@@ -19,14 +19,12 @@ def update_existing_incident(*, incident, signal):
         f"({value}%) — heartbeat update"
     )
 
-    # 🧾 TIMELINE EVENT
     IncidentTimeline.objects.create(
         incident=incident,
         event_type=IncidentTimeline.EVENT_NOTE,
         message=message,
     )
 
-    # 🔄 AGENT YANGI BO‘LSA BOG‘LAYMIZ
     if not incident.infra_agent and signal.infra_agent:
         incident.infra_agent = signal.infra_agent
         incident.save(update_fields=["infra_agent"])

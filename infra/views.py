@@ -21,9 +21,7 @@ from channels.layers import get_channel_layer
 logger = logging.getLogger(__name__)
 
 
-# ==========================================================
-# 1️⃣ HEARTBEAT (Agent → Backend)
-# ==========================================================
+
 
 class InfraHeartbeatAPIView(APIView):
     """
@@ -38,7 +36,7 @@ class InfraHeartbeatAPIView(APIView):
 
         try:
 
-            # 🔐 API KEY AUTH
+            #  API KEY AUTH
             api_key = request.headers.get("Authorization")
 
             if not api_key:
@@ -58,7 +56,7 @@ class InfraHeartbeatAPIView(APIView):
                     status=status.HTTP_401_UNAUTHORIZED
                 )
 
-            # 📊 METRICS PAYLOAD
+            #  METRICS PAYLOAD
             try:
                 cpu = float(request.data.get("cpu_percent", 0))
                 ram = float(request.data.get("ram_percent", 0))
@@ -69,11 +67,11 @@ class InfraHeartbeatAPIView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # ❤️ UPDATE HEARTBEAT
+            #  UPDATE HEARTBEAT
             agent.last_seen_at = timezone.now()
             agent.save(update_fields=["last_seen_at"])
 
-            # 📈 STORE METRICS HISTORY
+            #  STORE METRICS HISTORY
             InfraMetricHistory.objects.bulk_create([
                 InfraMetricHistory(
                     infra_agent=agent,
@@ -95,7 +93,7 @@ class InfraHeartbeatAPIView(APIView):
                 ),
             ])
 
-            # 🔥 REALTIME METRICS BROADCAST (WebSocket)
+            #  REALTIME METRICS BROADCAST (WebSocket)
             try:
 
                 channel_layer = get_channel_layer()
@@ -120,7 +118,7 @@ class InfraHeartbeatAPIView(APIView):
                     ws_error,
                 )
 
-            # 🧠 SIGNAL ENGINE
+            #  SIGNAL ENGINE
             try:
 
                 signal = evaluate_infra_metrics(
@@ -131,7 +129,7 @@ class InfraHeartbeatAPIView(APIView):
                     disk=disk,
                 )
 
-                # 🚨 ALERT ENGINE
+                #  ALERT ENGINE
                 if signal:
                     dispatch_alert(signal)
 
@@ -160,9 +158,7 @@ class InfraHeartbeatAPIView(APIView):
             )
 
 
-# ==========================================================
-# 2️⃣ METRIC HISTORY (Charts API)
-# ==========================================================
+
 
 class InfraMetricHistoryAPIView(APIView):
     """
@@ -195,9 +191,6 @@ class InfraMetricHistoryAPIView(APIView):
         return Response(data)
 
 
-# ==========================================================
-# 3️⃣ INCIDENT OVERLAY (Chart markers)
-# ==========================================================
 
 class AgentIncidentOverlayAPIView(APIView):
     """
@@ -230,9 +223,7 @@ class AgentIncidentOverlayAPIView(APIView):
         return Response(data)
 
 
-# ==========================================================
-# 4️⃣ SERVERS STATUS (Infrastructure Monitoring)
-# ==========================================================
+
 
 class InfraServersStatusAPIView(APIView):
     """
@@ -280,9 +271,7 @@ class InfraServersStatusAPIView(APIView):
         return Response(data)
 
 
-# ==========================================================
-# 5️⃣ SERVER DETAIL PAGE (Deep Monitoring)
-# ==========================================================
+
 
 class InfraServerDetailAPIView(APIView):
     """

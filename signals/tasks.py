@@ -8,5 +8,4 @@ def run_silent_support_decay(self):
         try:
             detect_silent_support_decay_v2(company)
         except Exception as e:
-            # Bu joyda keyin audit/log qo‘shamiz
             print(f"Signal error for {company.id}: {e}")

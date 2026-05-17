@@ -7,7 +7,6 @@ class Company(models.Model):
     industry = models.CharField(max_length=100, blank=True)
     size = models.PositiveIntegerField(help_text="Employee count")
 
-    # 🔥 SLA Configuration
     sla_response_time_ms = models.IntegerField(default=800)
     sla_error_rate_percent = models.FloatField(default=2.0)
     sla_downtime_minutes = models.IntegerField(default=5)
@@ -27,7 +26,7 @@ class Company(models.Model):
         return self.name
 
 
-# 🔥 ENTERPRISE RBAC FOUNDATION
+
 class CompanyMembership(models.Model):
 
     class Role(models.TextChoices):

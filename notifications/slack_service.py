@@ -7,7 +7,7 @@ def send_slack_alert(incident, config):
 
     payload = {
         "text": f"""
-🚨 Reality Engine Incident
+ Reality Engine Incident
 
 ID: {incident.id}
 Company: {incident.company.name}

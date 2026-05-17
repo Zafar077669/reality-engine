@@ -12,10 +12,6 @@ from companies.models import CompanyMembership
 from users.models import User
 
 
-# ==========================================================
-# INCIDENT LIST
-# ==========================================================
-
 class IncidentListAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -48,9 +44,6 @@ class IncidentListAPIView(APIView):
         return Response(data)
 
 
-# ==========================================================
-# ASSIGN INCIDENT
-# ==========================================================
 
 class IncidentAssignAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -92,9 +85,6 @@ class IncidentAssignAPIView(APIView):
         return Response({"detail": "Incident assigned"})
 
 
-# ==========================================================
-# RESOLVE INCIDENT
-# ==========================================================
 
 class IncidentResolveAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -125,9 +115,7 @@ class IncidentResolveAPIView(APIView):
         return Response({"detail": "Incident resolved"})
 
 
-# ==========================================================
-# ACK INCIDENT
-# ==========================================================
+
 
 class IncidentAcknowledgeAPIView(APIView):
     permission_classes = [IsAuthenticated]

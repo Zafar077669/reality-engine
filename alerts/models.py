@@ -7,9 +7,7 @@ from signals.models import Signal
 from incidents.models import Incident
 
 
-# ============================================================
-# ALERT RULE (Metric-based Alert Configuration)
-# ============================================================
+
 
 class AlertRule(models.Model):
 
@@ -82,9 +80,7 @@ class AlertRule(models.Model):
         return f"{self.company.name} | {self.metric} {self.operator} {self.threshold}"
 
 
-# ============================================================
-# ALERT HISTORY (Universal Notification Log)
-# ============================================================
+
 
 class AlertHistory(models.Model):
 

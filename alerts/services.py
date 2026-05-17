@@ -1,4 +1,3 @@
-# alerts/services.py
 
 import logging
 from django.db import transaction
@@ -19,14 +18,14 @@ def dispatch_telegram_alert(signal, recipient=None):
     company = signal.company
     chat_id = company.telegram_chat_id
 
-    # 🛑 Agar chat_id yo‘q bo‘lsa — yubormaymiz
+    
     if not chat_id:
         logger.warning(
             f"No telegram_chat_id set for company {company.id}"
         )
         return False
 
-    # 1️⃣ Alert message render
+    
     message = (
         f"🚨 <b>CRITICAL ALERT</b>\n\n"
         f"Signal ID: {signal.id}\n"
@@ -38,10 +37,10 @@ def dispatch_telegram_alert(signal, recipient=None):
     )
 
     try:
-        # 2️⃣ Telegram send (TO‘G‘RI)
+        
         send_telegram_alert(chat_id, message)
 
-        # 3️⃣ Success history
+        
         with transaction.atomic():
             AlertHistory.objects.create(
                 company=company,

@@ -29,7 +29,7 @@ class Signal(models.Model):
         related_name="signals"
     )
 
-    # 🔗 Incident integration
+    #  Incident integration
     incident = models.ForeignKey(
         "incidents.Incident",
         on_delete=models.SET_NULL,
@@ -38,7 +38,7 @@ class Signal(models.Model):
         related_name="signals"
     )
 
-    # 🔗 Infra agent integration
+    #  Infra agent integration
     infra_agent = models.ForeignKey(
         "infra.InfraAgent",
         on_delete=models.SET_NULL,
@@ -47,7 +47,7 @@ class Signal(models.Model):
         related_name="signals"
     )
 
-    # 🔥 Infra metrics
+    #  Infra metrics
     metric = models.CharField(
         max_length=50,
         null=True,
@@ -60,7 +60,7 @@ class Signal(models.Model):
         blank=True
     )
 
-    # 🧠 SLA / Business metrics
+    #  SLA / Business metrics
     response_time_ms = models.IntegerField(
         null=True,
         blank=True
@@ -74,7 +74,7 @@ class Signal(models.Model):
         default=0
     )
 
-    # 🚨 Core fields
+    #  Core fields
     severity = models.CharField(
         max_length=10,
         choices=SEVERITY_CHOICES,

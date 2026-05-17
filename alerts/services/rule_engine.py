@@ -7,9 +7,6 @@ from signals.services.signal_creator import create_signal_if_needed
 from signals.services.auto_resolve import resolve_signal_if_recovered
 
 
-# ============================================================
-# OPERATOR COMPARISON
-# ============================================================
 
 def _compare(operator: str, value: float, threshold: float) -> bool:
     """
@@ -25,9 +22,7 @@ def _compare(operator: str, value: float, threshold: float) -> bool:
     return False
 
 
-# ============================================================
-# RULE EVALUATION (optional helper)
-# ============================================================
+
 
 def evaluate_rules(
     company: Company,
@@ -56,9 +51,7 @@ def evaluate_rules(
     return matched_rules
 
 
-# ============================================================
-# METRIC PROCESSING ENTRYPOINT
-# ============================================================
+
 
 def process_metric(
     company: Company,
@@ -90,7 +83,7 @@ def process_metric(
 
     for rule in rules:
 
-        # 1️⃣ resolve signal if metric returned to normal
+        
         resolve_signal_if_recovered(
             company=company,
             metric_name=metric_name,
@@ -98,7 +91,7 @@ def process_metric(
             rule=rule,
         )
 
-        # 2️⃣ if rule violated → create signal
+        
         if _compare(rule.operator, value, rule.threshold):
 
             try:

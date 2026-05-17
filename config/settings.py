@@ -9,27 +9,37 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
-from pathlib import Path
 import os
+os.environ["PGCLIENTENCODING"] = "UTF8"
+from pathlib import Path
+
 from dotenv import load_dotenv
+
+
+load_dotenv() 
+print("NAME:", repr(os.getenv("DB_NAME")))
+print("USER:", repr(os.getenv("DB_USER")))
+print("PASSWORD:", repr(os.getenv("DB_PASSWORD")))
+print("HOST:", repr(os.getenv("DB_HOST")))
+print("PORT:", repr(os.getenv("DB_PORT")))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
-
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
+
+DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = [
     "reality-engine.duckdns.org",
-    "159.223.18.164",
+    "178.128.205.165",
     "localhost",
     "127.0.0.1",
 ]
@@ -126,13 +136,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'reality_engine',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 # Password validation
@@ -172,7 +182,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = []
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 from datetime import timedelta
 
 REST_FRAMEWORK = {
@@ -288,6 +298,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://178.128.205.165",
+    "https://reality-engine.duckdns.org",
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -306,8 +318,8 @@ CORS_EXPOSE_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://reality-engine.duckdns.org",
+    "http://178.128.205.165",
 ]
-
 # =========================
 # TELEGRAM CONFIG
 # =========================

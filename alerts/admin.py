@@ -3,10 +3,6 @@ from django.contrib import admin
 from alerts.models import AlertHistory, AlertRule
 
 
-# ============================================================
-# ALERT HISTORY ADMIN
-# ============================================================
-
 @admin.register(AlertHistory)
 class AlertHistoryAdmin(admin.ModelAdmin):
 
@@ -61,9 +57,6 @@ class AlertHistoryAdmin(admin.ModelAdmin):
     signal_id.short_description = "Signal ID"
 
 
-# ============================================================
-# ALERT RULE ADMIN
-# ============================================================
 
 @admin.register(AlertRule)
 class AlertRuleAdmin(admin.ModelAdmin):
